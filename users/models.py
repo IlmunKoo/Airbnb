@@ -16,9 +16,35 @@ class User(AbstractUser):  # User(models.Model)가 아님
         (GENDER_OTHER, "Other"),
     )
 
-    bio = models.TextField(default="", blank=True)
+    LANGUAGE_ENGLISH = "en"
+    LANGUAGE_KOREAN = "kr"
+
+    LANGUAGE_CHOICES = (
+        (LANGUAGE_ENGLISH, "English"),  # LANGUAGE__ENGLISH가 DB로, "English"가 보여질 값
+        (LANGUAGE_KOREAN, "Korean"),
+    )
+
+    CURRENCY_USD = "usd"
+    CURRENCY_KRW = "krw"
+
+    CURRENCY_CHOICES = (
+        (CURRENCY_USD, "USD"),
+        (CURRENCY_KRW, "KRW"),
+    )
+
+    avatar = models.ImageField(null=True, blank=True)
     gender = models.CharField(
         choices=GENDER_CHOICES, max_length=10, null=True, blank=True
     )  # max_length 필수, null이어도 괜찮다고 말해줌
-    avatar = models.ImageField(null=True, blank=True)  # 사진
+    bio = models.TextField(default="", blank=True)
 
+    birthdate = models.DateField(null=True)
+    language = models.CharField(
+        choices=LANGUAGE_CHOICES, max_length=2, null=True, blank=True
+    )
+
+    currency = models.CharField(
+        choices=CURRENCY_CHOICES, max_length=3, null=True, blank=True
+    )
+
+    superhost = models.BooleanField(default=False)
