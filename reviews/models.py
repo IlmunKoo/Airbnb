@@ -17,6 +17,11 @@ class Review(core_models.TimeStampedModel):
     user = models.ForeignKey("users.User", on_delete=models.CASCADE)
     room = models.ForeignKey("rooms.Room", on_delete=models.CASCADE)
 
+    # 메뉴 라인에 보이는 글자
     def __str__(self):
-        # return self.review #객실의 리뷰
-        return self.room.country
+        return f"{self.review} - {self.room.name}"
+        # return f"{self.review} - {self.room}"
+
+        # return self.room.host.username
+        # return self.review  # 객실의 리뷰
+
