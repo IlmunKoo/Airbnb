@@ -81,10 +81,12 @@ class Room(core_models.TimeStampedModel):  # 여러 번 사용되는 기능 상�
     host = models.ForeignKey(
         "users.User", related_name="rooms", on_delete=models.CASCADE
     )
-    room_type = models.ForeignKey("RoomType", on_delete=models.SET_NULL, null=True)
-    amenities = models.ManyToManyField("Amenity", blank=True)
-    facilities = models.ManyToManyField("Facility", blank=True)
-    house_rules = models.ManyToManyField("HouseRule", blank=True)
+    room_type = models.ForeignKey(
+        "RoomType", related_name="rooms", on_delete=models.SET_NULL, null=True
+    )
+    amenities = models.ManyToManyField("Amenity", related_name="rooms", blank=True)
+    facilities = models.ManyToManyField("Facility", related_name="rooms", blank=True)
+    house_rules = models.ManyToManyField("HouseRule", related_name="rooms", blank=True)
 
     def __str__(self):
         return self.name
@@ -96,3 +98,4 @@ class Room(core_models.TimeStampedModel):  # 여러 번 사용되는 기능 상�
     # 여러 비디오, 하나의 채널
     # host는 user여야 함, 어떤 모델과 다른 모델을 연결할 방법(foreign keys, 커넥션 필요, room과 user가 연결되어야 함)
     # 연결 완료
+
