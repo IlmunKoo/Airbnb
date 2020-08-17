@@ -45,6 +45,7 @@ class RoomAdmin(admin.ModelAdmin):
         "check_in",
         "check_out",
         "instant_book",
+        "count_amenities",
     )
     list_filter = (
         "instant_book",
@@ -57,6 +58,8 @@ class RoomAdmin(admin.ModelAdmin):
         "country",
     )
 
+    # ordering = ("name", "price", "bedrooms")
+
     search_fields = ("city", "^host__username")
 
     filter_horizontal = (
@@ -64,6 +67,11 @@ class RoomAdmin(admin.ModelAdmin):
         "facilities",
         "house_rules",
     )
+
+    def count_amenities(self, obj):
+        return "Potato"
+
+    count_amenities.short_description = "Hello sexy"
 
 
 @admin.register(models.Photo)
