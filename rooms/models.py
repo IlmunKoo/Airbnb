@@ -78,7 +78,9 @@ class Room(core_models.TimeStampedModel):  # 여러 번 사용되는 기능 상�
     check_in = models.TimeField()  # 0시~24시, 날짜신경x DateTimeField와 다름
     check_out = models.TimeField()
     instant_book = models.BooleanField(default=False)  # 즉시예약 가능한 경우
-    host = models.ForeignKey("users.User", on_delete=models.CASCADE)
+    host = models.ForeignKey(
+        "users.User", related_name="rooms", on_delete=models.CASCADE
+    )
     room_type = models.ForeignKey("RoomType", on_delete=models.SET_NULL, null=True)
     amenities = models.ManyToManyField("Amenity", blank=True)
     facilities = models.ManyToManyField("Facility", blank=True)
