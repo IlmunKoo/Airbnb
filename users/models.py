@@ -15,7 +15,7 @@ class User(AbstractUser):  # User(models.Model)가 아님
         (GENDER_FEMALE, "Female"),
         (GENDER_OTHER, "Other"),
     )
-
+ 
     LANGUAGE_ENGLISH = "en"
     LANGUAGE_KOREAN = "kr"
 
