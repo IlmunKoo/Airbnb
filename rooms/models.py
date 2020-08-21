@@ -23,7 +23,7 @@ class Photo(core_models.TimeStampedModel):
     """ Photo Model Definition """
 
     caption = models.CharField(max_length=80)
-    file = models.ImageField()
+    file = models.ImageField(upload_to="room_photos")
     room = models.ForeignKey("Room", related_name="photos", on_delete=models.CASCADE)
 
     def __str__(self):
@@ -98,8 +98,6 @@ class Room(core_models.TimeStampedModel):  # 여러 번 사용되는 기능 상�
         for review in all_reviews:
             all_ratings += review.rating_average()
         return all_ratings / len(all_reviews)
-
-
 
     # Foreign key: 일대다(many-to-one)관계
     # user는 1명, room은 여러 개 가질 수 있음

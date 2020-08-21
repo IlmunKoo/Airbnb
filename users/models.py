@@ -15,7 +15,7 @@ class User(AbstractUser):  # User(models.Model)가 아님
         (GENDER_FEMALE, "Female"),
         (GENDER_OTHER, "Other"),
     )
- 
+
     LANGUAGE_ENGLISH = "en"
     LANGUAGE_KOREAN = "kr"
 
@@ -32,7 +32,7 @@ class User(AbstractUser):  # User(models.Model)가 아님
         (CURRENCY_KRW, "KRW"),
     )
 
-    avatar = models.ImageField(blank=True)
+    avatar = models.ImageField(upload_to="avatars", blank=True)
     gender = models.CharField(
         choices=GENDER_CHOICES, max_length=10, blank=True
     )  # max_length 필수, null이어도 괜찮다고 말해줌
