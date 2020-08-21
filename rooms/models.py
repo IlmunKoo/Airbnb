@@ -91,6 +91,16 @@ class Room(core_models.TimeStampedModel):  # 여러 번 사용되는 기능 상�
     def __str__(self):
         return self.name
 
+    def total_rating(self):
+        all_reviews = self.reviews.all()
+        all_ratings = 0
+
+        for review in all_reviews:
+            all_ratings += review.rating_average()
+        return all_ratings / len(all_reviews)
+
+
+
     # Foreign key: 일대다(many-to-one)관계
     # user는 1명, room은 여러 개 가질 수 있음
     # 인스타그램: 일대 다 관계,

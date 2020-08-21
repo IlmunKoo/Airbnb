@@ -6,4 +6,10 @@ from . import models
 
 @admin.register(models.List)
 class ListAdmin(admin.ModelAdmin):
-    pass
+    list_display = (
+        "__str__",
+        "count_rooms",
+    )
+    search_fields = ("name",)
+    filter_horizontal = ("room",)
+
