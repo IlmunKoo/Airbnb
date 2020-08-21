@@ -13,8 +13,12 @@ class Review(core_models.TimeStampedModel):
     check_in = models.IntegerField()
     value = models.IntegerField()
     # 모두 다 필수항목임
-    user = models.ForeignKey("users.User", related_name = "reviews", on_delete=models.CASCADE)
-    room = models.ForeignKey("rooms.Room", related_name = "reviews", on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        "users.User", related_name="reviews", on_delete=models.CASCADE
+    )
+    room = models.ForeignKey(
+        "rooms.Room", related_name="reviews", on_delete=models.CASCADE
+    )
 
     # 메뉴 라인에 보이는 글자
     def __str__(self):
@@ -23,17 +27,17 @@ class Review(core_models.TimeStampedModel):
 
         # return self.room.host.username
         # return self.review  # 객실의 리뷰
-    
-    def rating_average(self):
-        avg = ( 
-            self.accuracy +
-                self.communication+
-                self.cleanliness+
-                self.location+
-                self.check_in+
-                self.value ) / 6 
-        return round(avg, 2 )
-    
-    rating_average.short_description = "Avg."
 
+    def rating_average(self):
+        avg = (
+            self.accuracy
+            + self.communication
+            + self.cleanliness
+            + self.location
+            + self.check_in
+            + self.value
+        ) / 6
+        return round(avg, 2)
+
+    rating_average.short_description = "Avg."
 

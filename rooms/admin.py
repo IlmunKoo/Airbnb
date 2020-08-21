@@ -19,6 +19,10 @@ class Itemadmin(admin.ModelAdmin):
         return obj.rooms.count()
 
 
+class PhotoInline(admin.TabularInline):
+    model = models.Photo
+
+
 @admin.register(models.Room)
 class RoomAdmin(admin.ModelAdmin):
 
@@ -67,7 +71,12 @@ class RoomAdmin(admin.ModelAdmin):
         "country",
     )
 
+    raw_id_fields = ("host",)
+
     # ordering = ("name", "price", "bedrooms")
+    inlines = [
+        PhotoInline,
+    ]
 
     search_fields = ("city", "^host__username")
 
