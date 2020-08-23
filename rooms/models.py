@@ -91,13 +91,17 @@ class Room(core_models.TimeStampedModel):  # 여러 번 사용되는 기능 상�
     def __str__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        self.city = str.capitalize(self.city)
+        super().save(*args, **kwargs)
+
     def total_rating(self):
         all_reviews = self.reviews.all()
         all_ratings = 0
-
-        for review in all_reviews:
-            all_ratings += review.rating_average()
-        return all_ratings / len(all_reviews)
+        if len(all_reviews) > 0:
+            for review in all_reviews:
+                all_ratings += review.rating_average()
+            return all_ratings / len(all_reviews)
 
     # Foreign key: 일대다(many-to-one)관계
     # user는 1명, room은 여러 개 가질 수 있음
@@ -106,4 +110,3 @@ class Room(core_models.TimeStampedModel):  # 여러 번 사용되는 기능 상�
     # 여러 비디오, 하나의 채널
     # host는 user여야 함, 어떤 모델과 다른 모델을 연결할 방법(foreign keys, 커넥션 필요, room과 user가 연결되어야 함)
     # 연결 완료
-
