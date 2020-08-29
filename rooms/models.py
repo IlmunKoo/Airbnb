@@ -101,7 +101,8 @@ class Room(core_models.TimeStampedModel):  # 여러 번 사용되는 기능 상�
         if len(all_reviews) > 0:
             for review in all_reviews:
                 all_ratings += review.rating_average()
-            return all_ratings / len(all_reviews)
+            return round(all_ratings / len(all_reviews))
+        return 0
 
     # Foreign key: 일대다(many-to-one)관계
     # user는 1명, room은 여러 개 가질 수 있음
