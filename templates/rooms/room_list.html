@@ -12,8 +12,10 @@ Home
 
 
 {% for room in rooms %}
-<h4>{{room.name}} / ${{room.price}}</h1>
+<a href= "{% url "rooms:detail" room.pk %}">
 
+<h4>{{room.name}} / ${{room.price}}</h1>
+</a>
 {% endfor %}
 
 <h5>
