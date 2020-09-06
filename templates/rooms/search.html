@@ -106,5 +106,11 @@
 
   </form>
 
-<h4>Searching by {{city}}</h4>
+  <h3>Results</h3>
+
+  {% for room in rooms %}
+
+  <h3>{{room.name}}</h3>
+  {% endfor %}
+
 {% endblock %}
