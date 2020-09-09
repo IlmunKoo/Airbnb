@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.urls import reverse
 from django_countries import countries
 from django.shortcuts import render, redirect
+from django.core.paginator import Paginator
 from . import models, forms
 
 
@@ -32,11 +33,15 @@ class RoomDetail(DetailView):
 
 class SearchView(View):
     def get(self, request):
+
         country = request.GET.get("country")
+
         if country:
+
             form = forms.SearchForm(request.GET)
 
             if form.is_valid():
+
                 city = form.cleaned_data.get("city")
                 country = form.cleaned_data.get("country")
                 room_type = form.cleaned_data.get("room_type")
@@ -87,10 +92,18 @@ class SearchView(View):
                 for facility in facilities:
                     filter_args["facilities"] = facility
 
-                rooms = models.Room.objects.filter(**filter_args)
+                qs = models.Room.objects.filter(**filter_args).order_by("-created")
+                paginator = Paginator(qs, 10, orphans=5)
+
+                page = request.GET.get("page", 1)
+                rooms = paginator.get_page(page)
+
+                return render(
+                    request, "rooms/search.html", {"form": form, "rooms": rooms}
+                )
 
         else:
 
             form = forms.SearchForm()
 
-        return render(request, "rooms/search.html", {"form": form, "rooms": rooms})
+        return render(request, "rooms/search.html", {"form": form})
