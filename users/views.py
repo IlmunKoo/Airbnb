@@ -1,14 +1,26 @@
 from django.views import View
-from django.shortcuts import render
-
+from django.shortcuts import render, redirect, reverse
+from django.contrib.auth import authenticate, login, logout
+from . import forms
 
 # Create your views here.
 class LoginView(View):
     def get(self, request):
-        return render(request, "users/Login.html")
+        form = forms.LoginForm(initial={"email":"mun90505@naver.com"})
+        return render(request, "users/login.html", {"form": form})
 
     def post(self, request):
-        pass
+        form = forms.LoginForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data.get("email")
+            password = form.cleaned_data.get("password")
+            user = authenticate(request, username = email, password = password)
+            if user is not None:
+                login(request, user)
+                return redirect(reverse("core:home"))
+                # reverse: url에서 선언한 name으로 URL 받아와 사용
+
+        return render(request, "users/login.html", {"form":form})
 
 # 아래 function 기반 view 하는 것과 같은 것 하는 중
 # def login_view(request):
@@ -16,3 +28,7 @@ class LoginView(View):
 #         pass
 #     elif request.method == "POST":
 #         pass
+
+def log_out(request):
+    logout(request)
+    return redirect(reverse("core:home"))
